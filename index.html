@@ -1,0 +1,36 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Demo</title>
+</head>
+<body>
+    <h1>WebSocket İstemcisi</h1>
+    <input type="text" id="messageInput" placeholder="Mesajınızı yazın">
+    <button onclick="sendMessage()">Mesaj Gönder</button>
+
+    <script>
+        // WebSocket bağlantısını kur
+        const socket = new WebSocket('ws://localhost:8080');
+
+        // Bağlantı açıldığında çalışacak olan fonksiyon
+        socket.onopen = () => {
+            console.log('Sunucuya bağlandı.');
+            socket.send('Cihaz bağlandı');
+        };
+
+        // Sunucudan mesaj alındığında çalışacak olan fonksiyon
+        socket.onmessage = (event) => {
+            console.log('Sunucudan gelen mesaj:', event.data);
+        };
+
+        // Mesaj gönderme fonksiyonu
+        function sendMessage() {
+            const message = document.getElementById('messageInput').value;
+            socket.send(message);
+        }
+    </script>
+</body>
+</html>
